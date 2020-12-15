@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Interfaces
 {
@@ -7,6 +8,7 @@ namespace BusinessLayer.Interfaces
     public interface IManager<T>
     {
         IReadOnlyList<T> HaalOp();
+        IReadOnlyList<T> HaalOp(Func<T, bool> predicate);
         void VoegToe(T anItem);
         void Verwijder(T anItem);
         T HaalOp(long id);

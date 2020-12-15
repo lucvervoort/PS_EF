@@ -126,6 +126,15 @@
   <data name="AddressTag" xml:space="preserve">
     <value>Adres: </value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Aantal</value>
+  </data>
+  <data name="ExceptionRaised" xml:space="preserve">
+    <value>Er deed zich een fout voor</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Nummer</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Naam</value>
   </data>
@@ -137,5 +146,14 @@
   </data>
   <data name="PriceTag" xml:space="preserve">
     <value>Prijs: </value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Verwijder</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Tijd</value>
+  </data>
+  <data name="TotalPrice" xml:space="preserve">
+    <value>Totale prijs</value>
   </data>
 </root>

@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Managers
 {
@@ -21,6 +23,12 @@ namespace BusinessLayer.Managers
             return new List<Bestelling>(_bestellingen.Values).AsReadOnly();
         }
 
+        public IReadOnlyList<Bestelling> HaalOp(Func<Bestelling, bool> predicate)
+        {
+            var selection = _bestellingen.Values.Where<Bestelling>(predicate).ToList();
+            return (IReadOnlyList<Bestelling>)selection;
+        }
+
         /// <summary>
         /// Voeg een bestelling toe
         /// </summary>
@@ -29,7 +37,7 @@ namespace BusinessLayer.Managers
         {
             if (_bestellingen.ContainsKey(bestelling.BestellingId))
             {
-                throw new BestellingManagerException("VoegBestellingToe");
+                _bestellingen[bestelling.BestellingId] = bestelling;
             }
             else
             {

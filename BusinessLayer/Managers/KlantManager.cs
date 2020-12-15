@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Managers
 {
@@ -17,11 +19,17 @@ namespace BusinessLayer.Managers
             return new List<Klant>(_klanten.Values).AsReadOnly();
         }
 
+        public IReadOnlyList<Klant> HaalOp(Func<Klant, bool> predicate)
+        {
+            var selection = _klanten.Values.Where<Klant>(predicate).ToList();
+            return (IReadOnlyList<Klant>)selection;
+        }
+
         public void VoegToe(Klant klant)
         {
             if (_klanten.ContainsKey(klant.KlantId))
             {
-                throw new KlantManagerException("VoegKlantToe");
+                _klanten[klant.KlantId] = klant;
             }
             else
             {

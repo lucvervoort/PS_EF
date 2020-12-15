@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Model
 {
-    public class Bestelling
+    public class Bestelling: Observable
     {
         #region Properties
         public int BestellingId { get; private set; } // PK
-        public bool Betaald { get; private set; }
-        public double PrijsBetaald { get; private set; }
+        public bool Betaald { get; set; }
+        public double PrijsBetaald { get; set; }
         public Klant Klant { get; private set; } // FK
-        public DateTime Tijdstip { get; private set; }
+        public DateTime Tijdstip { get; private set; } = DateTime.Now;
 
         private Dictionary<Product, int> _producten = new Dictionary<Product, int>(); // FK
         #endregion
@@ -19,7 +19,7 @@ namespace BusinessLayer.Model
         #region Ctor
         public Bestelling(int bestellingId, DateTime tijdstip)
         {
-            ZetBestellingId(bestellingId);
+            BestellingId = bestellingId;
             ZetTijdstip(tijdstip);
             Betaald = false;
         }

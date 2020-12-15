@@ -3,7 +3,7 @@ using System;
 
 namespace BusinessLayer.Model
 {
-    public class Product
+    public class Product: Observable
     {
         #region Properties
         public int ProductId { get; private set; } // PK

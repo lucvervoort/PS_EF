@@ -2,6 +2,7 @@
 using BusinessLayer.Model;
 using EntityFrameworkRepository;
 using EntityFrameworkRepository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,6 +41,17 @@ namespace BusinessLayer.Managers
                 klantenLijst.Add(dbItem.Item2);
             }
             return klantenLijst;
+        }
+
+        public IReadOnlyList<Klant> HaalOp(Func<Klant, bool> predicate)
+        {
+            var kltn = new List<Klant>();          
+            foreach(var item in _mappedObjects.Values)
+            {
+                kltn.Add(item.Item2);
+            }
+            var selection = kltn.Where<Klant>(predicate).ToList();
+            return (IReadOnlyList<Klant>)selection;
         }
 
         public void VoegToe(Klant klant)

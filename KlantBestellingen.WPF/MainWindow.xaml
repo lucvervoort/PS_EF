@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:langs="clr-namespace:KlantBestellingen.WPF.Languages"
         xmlns:local="clr-namespace:KlantBestellingen.WPF"
         mc:Ignorable="d"
         Title="Bestellingssysteem" Height="450" Width="800">
@@ -36,7 +37,31 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid Grid.Row="1" VerticalAlignment="Stretch"></DataGrid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="lblKlant" Grid.Row="0" Grid.Column="0" Margin="5" Content="Klantnaam: " VerticalAlignment="Center"/>
+            <TextBox x:Name="tbKlant" Grid.Row="0" Grid.Column="1" Margin="5" MinWidth="250" KeyUp="TextBox_KeyUp" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="cbKlanten" Grid.Row="0" Grid.Column="2" Margin="5" DisplayMemberPath="Naam" SelectedValuePath="Naam" VerticalAlignment="Center" SelectionChanged="ComboBox_SelectionChanged"/>
+            <Label x:Name="lblBestellingen" Grid.Row="1" Grid.Column="0" Margin="5" Content="Bestellingen: "/>
+            <DataGrid x:Name="dgOrderSelection" Grid.Row="2" Grid.ColumnSpan="3" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" AlternatingRowBackground="#FFB9BBFF" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <!-- we linken ons aan een property van de class Klant: -->
+                    <DataGridTextColumn  Header="{x:Static langs:Translations.Time}" Binding="{Binding Tijdstip}" MinWidth="200"/>
+                    <DataGridTextColumn  Header="{x:Static langs:Translations.Price}" Binding="{Binding PrijsBetaald}" MinWidth="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="3" Grid.Column="2" Content="Nieuwe bestelling..." Click="MaakBestelling_Click" HorizontalAlignment="Right" Margin="5"/>
+        </Grid>
         <DockPanel Grid.Row="2">
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>

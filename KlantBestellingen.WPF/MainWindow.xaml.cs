@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace KlantBestellingen.WPF
@@ -24,6 +14,7 @@ namespace KlantBestellingen.WPF
         #region Properties
         private Klanten _customerWindow = new Klanten();
         private Producten _productsWindow = new Producten();
+        private BestellingDetail _bestellingDetailWindow = new BestellingDetail();
         #endregion
 
         public MainWindow()
@@ -32,6 +23,7 @@ namespace KlantBestellingen.WPF
             Closing += MainWindow_Closing;
             _customerWindow.Closing += _Window_Closing;
             _productsWindow.Closing += _Window_Closing;
+            _bestellingDetailWindow.Closing += _Window_Closing;
         }
 
         /// <summary>
@@ -84,6 +76,62 @@ namespace KlantBestellingen.WPF
         private void MenuItemSluiten_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            // Als je een string toekrijgt, controleer dan steeds of deze wel een bruikbare waarde heeft bij aanvang (preconditie)
+            if(string.IsNullOrEmpty(tbKlant.Text))
+            {
+                cbKlanten.ItemsSource = null;
+                return;
+            }
+            // Tip: maak dit case insensitive voor "meer punten" ;-) Nog beter: reguliere expressies gebruiken
+            var klanten = Context.KlantManager.HaalOp(k => k.Naam.Contains(tbKlant.Text));
+            cbKlanten.ItemsSource = klanten;
+            // Indien er effectief klanten zijn, maak dan dat de eerste klant in de lijst meteen voorgeselecteerd is in de combobox:
+            if(klanten.Count > 0)
+            {
+                cbKlanten.SelectedIndex = 0; // het 0-de item is de eerste klant want C# is zero-based
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Refresh(sender, e);
+        }
+
+        /// <summary>
+        /// Tip: interessant voor eindopdracht!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Refresh(object sender, EventArgs e)
+        {
+            if (cbKlanten.SelectedItem != null)
+            {
+                // Indien er een klant geselecteerd is, dan tonen we de bestellingen van die klant
+                var bestellingen = Context.BestellingManager.HaalOp(b => b.Klant == cbKlanten.SelectedItem);
+                dgOrderSelection.ItemsSource = bestellingen;
+            }
+            else
+            {
+                // Indien er geen klant geselecteerd is, tonen we geen bestellingen
+                dgOrderSelection.ItemsSource = null;
+            }
+        }
+
+        private void MaakBestelling_Click(object sender, RoutedEventArgs e)
+        {
+            // Indien het detailvenster voor de bestelling bestaat en dit bestaat eigenlijk altijd, en er is een klant geselecteerd, dan toon ik het venster voor die klant:
+            if (_bestellingDetailWindow == null || cbKlanten.SelectedIndex < 0)
+            {
+                return;
+            }
+
+            _bestellingDetailWindow.Klant = cbKlanten.SelectedItem as BusinessLayer.Model.Klant;
+            _bestellingDetailWindow.Order = null;
+            _bestellingDetailWindow.Show();
         }
     }
 }

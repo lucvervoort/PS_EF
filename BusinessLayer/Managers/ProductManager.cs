@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BusinessLayer.Exceptions;
 using System.Linq;
 using BusinessLayer.Interfaces;
+using System;
 
 namespace BusinessLayer.Managers
 {
@@ -15,11 +16,17 @@ namespace BusinessLayer.Managers
             return new List<Product>(_producten.Values).AsReadOnly();
         }
 
+        public IReadOnlyList<Product> HaalOp(Func<Product, bool> predicate)
+        {
+            var selection = _producten.Values.Where<Product>(predicate).ToList();
+            return (IReadOnlyList<Product>)selection;
+        }
+
         public void VoegToe(Product product)
         {
             if (_producten.ContainsKey(product.Naam))
             {
-                throw new ProductManagerException("VoegProductToe");
+                _producten[product.Naam] = product;
             }
             else
             {

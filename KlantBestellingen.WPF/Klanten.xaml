@@ -28,10 +28,10 @@
 <!--                
                 <DataGridTextColumn Header="Adreslengte" Binding="{Binding Adres, Converter={StaticResource slc}}" MinWidth="50"/>
 -->
-                <DataGridTemplateColumn Header="Delete" Width="100">
+                <DataGridTemplateColumn Header="" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Delete" Click="DeleteButton_Click"/>
+                            <Button Content="{x:Static langs:Translations.Remove}" Click="DeleteButton_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -1,11 +1,11 @@
 ﻿using BusinessLayer.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace BusinessLayer.Model
 {
-    public class Klant: INotifyPropertyChanged
+
+    public class Klant: Observable
     {
         #region Properties
         public long KlantId { get; set; } // PK
@@ -13,15 +13,6 @@ namespace BusinessLayer.Model
         public string Adres { get; private set; }
 
         private List<Bestelling> _bestellingen = new List<Bestelling>(); // FK
-        #endregion
-
-        #region For WPF interface INotifyProperyChanged
-        // Deze code kan altijd in een class gecopieerd worden
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
 
         #region Ctor

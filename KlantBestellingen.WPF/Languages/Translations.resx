@@ -126,6 +126,15 @@
   <data name="AddressTag" xml:space="preserve">
     <value>Address: </value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="ExceptionRaised" xml:space="preserve">
+    <value>An exception was raised</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Number</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -137,5 +146,14 @@
   </data>
   <data name="PriceTag" xml:space="preserve">
     <value>Price: </value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="TotalPrice" xml:space="preserve">
+    <value>Total Price</value>
   </data>
 </root>
