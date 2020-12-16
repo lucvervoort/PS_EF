@@ -6,7 +6,7 @@ namespace BusinessLayer.Model
     public class Product: Observable
     {
         #region Properties
-        public int ProductId { get; private set; } // PK
+        public long ProductId { get; set; } // PK
         public string Naam { get; private set; }
         public double Prijs { get; private set; }
         #endregion
@@ -14,7 +14,7 @@ namespace BusinessLayer.Model
         #region Ctor
         public Product(string naam) => ZetNaam(naam);
         public Product(string naam, double prijs) : this(naam) => ZetPrijs(prijs);
-        public Product(int productId, string naam, double prijs) : this(naam, prijs)
+        public Product(long productId, string naam, double prijs) : this(naam, prijs)
         {
             ZetProductId(productId);
         }
@@ -33,7 +33,7 @@ namespace BusinessLayer.Model
             Naam = naam;
         }
 
-        public void ZetProductId(int productId)
+        public void ZetProductId(long productId)
         {
             if (productId <= 0) throw new ProductException("ProductId invalid");
             ProductId = productId;
